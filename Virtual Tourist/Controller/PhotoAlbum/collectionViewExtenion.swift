@@ -23,14 +23,13 @@ extension PhotoAlbumViewController: UICollectionViewDelegate , UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCollectionCell", for: indexPath) as! PhotoCollectionViewCell
         
         let photo = fetchedResultsController.object(at: indexPath)
         
         if let data = photo.imageDATA {
             cell.image.image = UIImage(data: data)
-            cell.contentView.alpha = 1.0
-
         } else {
             cell.image.image = UIImage(named: "image")
             cell.contentView.alpha = 1.0
@@ -88,11 +87,9 @@ extension PhotoAlbumViewController: UICollectionViewDelegate , UICollectionViewD
                     print("Unable to delete photo. \(error.localizedDescription)")
                 }
             }
-
+            self.collectionView.reloadData()
+            loadPhotos()
         }
-        loadPhotos()
-        self.collectionView.reloadData()
-
     }
     
     // Selected photos action button
