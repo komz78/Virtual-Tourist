@@ -71,26 +71,7 @@ extension PhotoAlbumViewController: UICollectionViewDelegate , UICollectionViewD
         }
         selectPhotoActionButton()
     }
-    
-    // MARK: Refresh New Collection
-    
-    
-    @IBAction func updateCollection(_ sender: Any) {
-        if hasSelectedPhotos() {
-            deleteSelectedPhotos()
-        } else {
-            fetchedResultsController.fetchedObjects?.forEach() { photo in
-                dataController.viewContext.delete(photo)
-                do {
-                    try dataController.viewContext.save()
-                } catch {
-                    print("Unable to delete photo. \(error.localizedDescription)")
-                }
-            }
-            self.collectionView.reloadData()
-            loadPhotos()
-        }
-    }
+
     
     // Selected photos action button
     func selectPhotoActionButton() {
