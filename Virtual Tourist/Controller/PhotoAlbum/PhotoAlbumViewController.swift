@@ -13,10 +13,7 @@ import CoreData
 class PhotoAlbumViewController: UIViewController  {
     
     
-    
-    //long lat values
-    var latitude : Double?
-    var longitude : Double?
+
     //IBOutlets
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var collectionView: UICollectionView!
@@ -64,11 +61,11 @@ class PhotoAlbumViewController: UIViewController  {
     func createAnnotation(){
         
         let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
+        annotation.coordinate = CLLocationCoordinate2DMake(pin.latitude, pin.longitute)
         mapView.addAnnotation(annotation)
         
         //zooming to location
-        let coredinate:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude!, longitude!)
+        let coredinate:CLLocationCoordinate2D = CLLocationCoordinate2DMake(pin.latitude, pin.longitute)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coredinate, span: span)
         
@@ -105,7 +102,7 @@ class PhotoAlbumViewController: UIViewController  {
         
         let flickrCall = FlickrApi.sharedInstance
         
-        flickrCall.getPhotosforLocation(latitude!, longitude!, 20) { (success, photos) in
+        flickrCall.getPhotosforLocation(pin.latitude, pin.longitute, 20) { (success, photos) in
             
             if success == false {
                 print("Unable to download images from Flickr.")

@@ -11,7 +11,7 @@ import Foundation
 class FlickrApi {
     
     static let sharedInstance = FlickrApi()
-    
+
     func getPhotosforLocation(_ latitude: Double, _ longitude: Double,_ page: Int, _ completion: @escaping (_ success: Bool, _ data: [[String: Any]]? ) -> Void) {
         
         let params = [ParameterKeys.APIKey  : Constants.APIKey,
@@ -20,9 +20,9 @@ class FlickrApi {
                       ParameterKeys.Format  : ParameterValues.ResponseFormat,
                       ParameterKeys.Lat     : String(describing: latitude),
                       ParameterKeys.Lon     : String(describing: longitude),
-                      ParameterKeys.Page    : String(describing: page),
+                      ParameterKeys.Page    : "\(randomPage.randomPageNumber())",
                       ParameterKeys.PerPage : "20",
-                      ParameterKeys.NoJSONCallback : ParameterValues.DisableJSONCallback]
+                      ParameterKeys.NoJSONCallback : ParameterValues.DisableJSONCallback] as [String : Any]
         
         var components = URLComponents()
         components.scheme = Constants.APIScheme

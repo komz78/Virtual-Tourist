@@ -14,14 +14,13 @@ class TravelLocationMapViewController: UIViewController {
     
     //CoreData
     var dataController: DataController!
+    var fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
     
     //IBOutlets
     @IBOutlet var mapView: MKMapView!
     
-    //log lat values
-    var latitude : Double?
-    var longitude : Double?
-    var myPin: Pin?
+    var myPin: Pin!
+    //core
     
     
     override func viewDidLoad() {
@@ -30,9 +29,15 @@ class TravelLocationMapViewController: UIViewController {
         setupFetchedResultsController()
         // check long press and do an action through selector
         let longPressRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(TravelLocationMapViewController.handleLongPress(_:)))
-        longPressRecogniser.minimumPressDuration = 1.0
+        longPressRecogniser.minimumPressDuration = 0.5
         mapView.addGestureRecognizer(longPressRecogniser)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupFetchedResultsController()
+    }
+    
     
     // MARK: Handling Long Press
     
@@ -60,8 +65,10 @@ class TravelLocationMapViewController: UIViewController {
         do{
             try dataController.viewContext.save()
             print("saved view context")
+            myPin = newPin
         } catch{
             print("Persist New Pin Error")
+            debugPrint()
         }
     }
     
@@ -69,7 +76,6 @@ class TravelLocationMapViewController: UIViewController {
     // MARK: Setup Fetched Results Controller
     
     func setupFetchedResultsController() {
-        let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
         if let result = try? dataController.viewContext.fetch(fetchRequest) {
             for pin in result {
                 let annotation = MKPointAnnotation()
@@ -84,8 +90,6 @@ class TravelLocationMapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "photoAlbumSegue"{
             let vc = segue.destination as! PhotoAlbumViewController
-            vc.latitude = self.latitude
-            vc.longitude = self.longitude
             vc.pin = myPin
         }
     }

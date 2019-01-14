@@ -8,10 +8,10 @@
     <entity name="Pin" representedClassName="Pin" syncable="YES" codeGenerationType="class">
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitute" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photos" inverseName="pin" inverseEntity="Photos" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Photos" inverseName="pin" inverseEntity="Photos" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Photos" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="Pin" positionX="-54" positionY="18" width="128" height="90"/>
+        <element name="Photos" positionX="212.1171875" positionY="-20.28125" width="128" height="90"/>
+        <element name="Pin" positionX="-54" positionY="18" width="128" height="88"/>
     </elements>
 </model>

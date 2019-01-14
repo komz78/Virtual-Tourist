@@ -32,22 +32,25 @@ extension TravelLocationMapViewController: MKMapViewDelegate {
         return pinView
     }
     
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("tapped on pin")
         //assign lat and log
-        if let latitude = view.annotation?.coordinate.latitude , let longitude = view.annotation?.coordinate.longitude {
-            //assign values to be sent through segue
-            self.longitude = longitude
-            self.latitude = latitude
-            
-            let newPin = Pin(context: dataController.viewContext)
-            newPin.latitude = longitude
-            newPin.longitute = latitude
-            self.myPin = newPin
-            
-            self.performSegue(withIdentifier: "photoAlbumSegue", sender: nil)
+        if let alatitude = view.annotation?.coordinate.latitude , let alongitude = view.annotation?.coordinate.longitude {
+            if let result = try? dataController.viewContext.fetch(fetchRequest) {
+                for pin in result {
+                    if pin.latitude == alatitude && pin.longitute == alongitude {
+                        myPin = pin
+                        print("inside mapview did select")
+                        self.performSegue(withIdentifier: "photoAlbumSegue", sender: nil)
+                    }
+                    else {
+                        print("returning")
+                    }
+                    
+                }
+            }
         }
     }
-    
 } // end of extension
 

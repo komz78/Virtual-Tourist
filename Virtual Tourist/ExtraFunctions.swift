@@ -22,5 +22,11 @@ struct displayAlert {
     }
     
     
+   
 }
 
+struct randomPage {
+    static func randomPageNumber() -> Int {
+        return Int.random(in: 0 ... 10)
+    }
+}
